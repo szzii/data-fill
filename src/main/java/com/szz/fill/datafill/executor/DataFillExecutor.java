@@ -6,7 +6,6 @@ import com.szz.fill.datafill.metadata.DataFillMetadata;
 import lombok.ToString;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -73,7 +72,7 @@ public class DataFillExecutor {
             try {
                 DataFillHandler fillHandler = handler.newInstance();
                 handlerKeys.put(handler.getName(), fillHandler);
-                fillHandler.fill(dataFillMetadata);
+                fillHandler.fill0(dataFillMetadata);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {

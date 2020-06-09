@@ -31,7 +31,11 @@ public class AddressHandler extends AbstractDataFillHandler {
             fillField.setAccessible(true);
             fillField.set(metadata.getFillObj(),address);
         }
-        return this;
+        throw new RuntimeException();
     }
 
+    @Override
+    protected void exceptionCaught(Throwable cause) throws Exception {
+        System.out.println("地址异常拦截");
+    }
 }

@@ -7,11 +7,20 @@ import java.lang.reflect.Field;
  */
 public class DataFillMetadata {
 
+    /**
+     * 填充字段
+     */
     private Field fillField;
 
+    /**
+     * 填充对象
+     */
     private Object fillObj;
 
-    private Object SelectionKey;
+    /**
+     * 查询条件
+     */
+    private Object selectionKey;
 
     public Field getFillField() {
         return fillField;
@@ -30,10 +39,10 @@ public class DataFillMetadata {
     }
 
     public Object getSelectionKey() {
-        return SelectionKey;
+        return selectionKey;
     }
 
     public void setSelectionKey(Object selectionKey) {
-        SelectionKey = selectionKey;
+        this.selectionKey = selectionKey;
     }
 }

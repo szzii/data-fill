@@ -7,11 +7,6 @@ import java.lang.reflect.Type;
  * @author szz
  */
 public class TestMain {
-    public int a = 1;
-    public TestMain testMain;
-
-    public String str;
-
 
     public User findUser(){
         User user = new User();

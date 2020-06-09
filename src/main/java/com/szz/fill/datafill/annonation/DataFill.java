@@ -1,7 +1,7 @@
-package datafill.annonation;
+package com.szz.fill.datafill.annonation;
 
 
-import datafill.handler.DataFillHandler;
+import com.szz.fill.datafill.handler.DataFillHandler;
 
 import java.lang.annotation.*;
 
@@ -15,6 +15,7 @@ import java.lang.annotation.*;
 public @interface DataFill {
 
     String value() default "";
+
 
     Class<? extends DataFillHandler> handler();
 }

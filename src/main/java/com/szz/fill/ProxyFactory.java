@@ -1,4 +1,6 @@
-import datafill.executor.DataFillExecutor;
+package com.szz.fill;
+
+import com.szz.fill.datafill.executor.DataFillExecutor;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -25,7 +27,7 @@ public class ProxyFactory<T> implements MethodInterceptor {
 
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         Object invoke = method.invoke(target, objects);
-        DataFillExecutor.executor(invoke);
+        DataFillExecutor.executor(invoke,null);
         return invoke;
     }
 

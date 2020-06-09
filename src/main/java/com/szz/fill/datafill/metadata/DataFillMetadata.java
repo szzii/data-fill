@@ -1,4 +1,4 @@
-package datafill.model;
+package com.szz.fill.datafill.metadata;
 
 import java.lang.reflect.Field;
 
@@ -11,7 +11,7 @@ public class DataFillMetadata {
 
     private Object fillObj;
 
-    private Object key;
+    private Object SelectionKey;
 
     public Field getFillField() {
         return fillField;
@@ -29,11 +29,11 @@ public class DataFillMetadata {
         this.fillObj = fillObj;
     }
 
-    public Object getKey() {
-        return key;
+    public Object getSelectionKey() {
+        return SelectionKey;
     }
 
-    public void setKey(Object key) {
-        this.key = key;
+    public void setSelectionKey(Object selectionKey) {
+        SelectionKey = selectionKey;
     }
 }

@@ -1,7 +1,3 @@
-import aop.ProxyFactory;
-import domain.IDataBase;
-import domain.User;
-
 /**
  * @author szz
  */
@@ -11,7 +7,7 @@ public class TestMain {
         User user = new User();
         user.setAge(18);
         user.setName("单昭铮");
-        user.setAddrId("1");
+        user.setAddrId("4");
         return user;
     }
 

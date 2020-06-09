@@ -1,6 +1,4 @@
-package domain;
-
-import datafill.DataFill;
+import datafill.annonation.DataFill;
 import lombok.Data;
 import lombok.ToString;
 
@@ -15,7 +13,7 @@ public class User {
 
     private int age;
 
-    @DataFill("addrId")
+    @DataFill(value = "addrId",handler = AddressHandler.class)
     private Address address;
 
     private String addrId;

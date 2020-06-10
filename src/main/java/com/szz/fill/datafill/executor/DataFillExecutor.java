@@ -14,7 +14,7 @@ import java.util.concurrent.*;
 /**
  * <h2>数据填充核心执行器</h2>
  * 该类将对象中的注解字段与对应的handler扫描出来，并为每个字段进行异步填充操作。
- * {@link com.szz.fill.datafill.executor.DataFillExecutor#tl} 此变量装载了每个字段等待操作任务
+ * {@link com.szz.fill.datafill.executor.DataFillExecutor#tl} 此变量装载了每个字段的操作任务
  * {@link DataFillExecutor#execute0(java.lang.Object, java.util.Map)} 此方法为核心方法也是填充的入口
  *
  * @author szz
@@ -28,7 +28,7 @@ public class DataFillExecutor {
         return fillGroup;
     });
 
-    public static ThreadPoolExecutor pool = new ThreadPoolExecutor(1, 1, 1,
+    public static final ThreadPoolExecutor pool = new ThreadPoolExecutor(1, 1, 1,
                         TimeUnit.SECONDS,
                         new LinkedBlockingDeque<>(1),
                         Executors.defaultThreadFactory(),

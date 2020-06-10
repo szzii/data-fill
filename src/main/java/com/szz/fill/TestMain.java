@@ -16,11 +16,11 @@ public class TestMain {
     }
 
 
-    public static void main(String[] args) throws NoSuchFieldException {
+    public static void main(String[] args) {
         TestMain testMain = new TestMain();
         ProxyFactory<TestMain> proxyFactory = new ProxyFactory(testMain);
         TestMain testMainProxy = proxyFactory.newInstance(testMain);
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1; i++) {
             new Thread(() -> {
                 User user = testMainProxy.findUser(1+"");
                 System.out.println(user.toString());

@@ -23,10 +23,13 @@ public class RoleHandler extends AbstractDataFillHandler {
 
     @Override
     public AbstractDataFillHandler fill(DataFillMetadata metadata) throws Exception {
+        System.out.println(Thread.currentThread().getName()+": 开始填充角色");
         Role role = roleMap.get(metadata.getSelectionKey());
-        Field fillField = metadata.getFillField();
-        fillField.setAccessible(true);
-        fillField.set(metadata.getFillObj(),role);
+        if (null != role){
+            Field fillField = metadata.getFillField();
+            fillField.setAccessible(true);
+            fillField.set(metadata.getFillObj(),role);
+        }
         return null;
     }
 }

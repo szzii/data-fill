@@ -4,53 +4,124 @@ import com.szz.fill.datafill.annonation.DataFill;
 import com.szz.fill.datafill.annonation.DataFillEnable;
 import com.szz.fill.datafill.handler.DataFillHandler;
 import com.szz.fill.datafill.metadata.DataFillMetadata;
-import lombok.ToString;
+import javafx.concurrent.Task;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 /**
  * @author szz
  */
-@ToString
 public class DataFillExecutor {
 
     private static ConcurrentHashMap<String, DataFillHandler> handlerKeys = new ConcurrentHashMap();
 
-    private static ThreadLocal tl = ThreadLocal.withInitial(new Supplier<Consumer>() {
-        @Override
-        public Consumer get() {
-            return null;
-        }
-    });
 
-    public static void execute(Object target, Map args) {
+    private static final List<Callable<Object>> fillGroup = new ArrayList<>();
+
+    public static ThreadPoolExecutor pool;
+
+    static {
+        pool = new ThreadPoolExecutor(
+                2,
+                2,
+                0,
+                TimeUnit.SECONDS,
+                new LinkedBlockingDeque<>(),
+                Executors.defaultThreadFactory(),
+                new ThreadPoolExecutor.CallerRunsPolicy());
+    }
+
+
+    public static void execute(Object target,Map args) {
+        execute0(target,args);
+        executeAfter();
+    }
+
+
+
+    private static void execute0(Object target, final Map args) {
         if (null == target) return;
-        if (null == args) args = new HashMap();
         Class<?> aClass = target.getClass();
         Field[] declaredFields = aClass.getDeclaredFields();
+
         for (Field declaredField : declaredFields) {
             DataFill dataFill = declaredField.getAnnotation(DataFill.class);
             if (null != dataFill) {
-                try {
-                    DataFillMetadata metadata = new DataFillMetadata();
-                    metadata.setFillField(declaredField);
-                    metadata.setFillObj(target);
-                    metadata.setSelectionKey(findParam(dataFill, target, args));
+
+                DataFillMetadata metadata = new DataFillMetadata();
+                metadata.setFillField(declaredField);
+                metadata.setFillObj(target);
+                metadata.setSelectionKey(findParam(dataFill, target, args));
+
+                fillGroup.add(() -> {
                     dispatcher(dataFill, metadata);
                     declaredField.setAccessible(true);
-                    Object sinkObj = declaredField.get(target);
+                    Object sinkObj = null;
+                    try {
+                        sinkObj = declaredField.get(target);
+                        if (null != sinkObj && null != sinkObj.getClass().getAnnotation(DataFillEnable.class)) {
+                            sinkExecute(sinkObj, args);
+                        }
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                });
+            }
+        }
+    }
+
+
+
+    private static void sinkExecute(Object target, final Map args) {
+        if (null == target) return;
+        Class<?> aClass = target.getClass();
+        Field[] declaredFields = aClass.getDeclaredFields();
+
+        for (Field declaredField : declaredFields) {
+            DataFill dataFill = declaredField.getAnnotation(DataFill.class);
+            if (null != dataFill) {
+
+                DataFillMetadata metadata = new DataFillMetadata();
+                metadata.setFillField(declaredField);
+                metadata.setFillObj(target);
+                metadata.setSelectionKey(findParam(dataFill, target, args));
+
+                dispatcher(dataFill, metadata);
+                declaredField.setAccessible(true);
+                Object sinkObj = null;
+                try {
+                    sinkObj = declaredField.get(target);
                     if (null != sinkObj && null != sinkObj.getClass().getAnnotation(DataFillEnable.class)) {
-                        execute(sinkObj, args);
+                        sinkExecute(sinkObj, args);
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+
+
+    public static void executeAfter(){
+        try {
+            List<Future<Object>> futures = pool.invokeAll(fillGroup);
+            for (Future<Object> future : futures) {
+                future.get();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
     }
 

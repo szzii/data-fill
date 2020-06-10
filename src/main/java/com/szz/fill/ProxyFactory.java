@@ -6,6 +6,8 @@ import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author szz
@@ -27,7 +29,7 @@ public class ProxyFactory<T> implements MethodInterceptor {
 
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         Object invoke = method.invoke(target, objects);
-        DataFillExecutor.execute(invoke,null);
+        DataFillExecutor.execute(invoke,new ConcurrentHashMap());
         return invoke;
     }
 

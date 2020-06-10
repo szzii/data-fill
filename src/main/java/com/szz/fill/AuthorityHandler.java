@@ -23,6 +23,7 @@ public class AuthorityHandler extends AbstractDataFillHandler {
 
     @Override
     public AbstractDataFillHandler fill(DataFillMetadata metadata) throws Exception {
+        System.out.println(Thread.currentThread().getName()+": 开始填充权限等级");
         Authority authority = authMap.get(metadata.getSelectionKey());
         if (null != authority){
             Field fillField = metadata.getFillField();

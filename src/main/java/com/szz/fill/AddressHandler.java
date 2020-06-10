@@ -25,13 +25,14 @@ public class AddressHandler extends AbstractDataFillHandler {
 
     @Override
     public AbstractDataFillHandler fill(DataFillMetadata metadata) throws Exception {
+        System.out.println(Thread.currentThread().getName()+": 开始填充地址");
         Address address = addressMap.get(metadata.getSelectionKey());
         if (null != address){
             Field fillField = metadata.getFillField();
             fillField.setAccessible(true);
             fillField.set(metadata.getFillObj(),address);
         }
-        throw new RuntimeException();
+        return this;
     }
 
     @Override

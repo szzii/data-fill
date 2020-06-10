@@ -6,13 +6,14 @@ import com.szz.fill.datafill.metadata.DataFillMetadata;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author szz
  */
 public class RoleHandler extends AbstractDataFillHandler {
 
-    public static Map<Object, Role> roleMap = new HashMap();
+    public static Map<Object, Role> roleMap = new ConcurrentHashMap<>();
 
     static {
         roleMap.put("1",new Role("普通用户"));

@@ -3,6 +3,7 @@ package com.szz.fill.datafill.metadata;
 import java.lang.reflect.Field;
 
 /**
+ * 字段填充元数据信息，最终这些数据将可以完成一个填充操作
  * @author szz
  */
 public class DataFillMetadata {

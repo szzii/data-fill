@@ -29,7 +29,7 @@ public class ProxyFactory<T> implements MethodInterceptor {
 
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         Object invoke = method.invoke(target, objects);
-        DataFillExecutor.execute(invoke,new ConcurrentHashMap());
+        DataFillExecutor.execute(invoke);
         return invoke;
     }
 

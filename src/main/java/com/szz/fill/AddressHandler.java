@@ -1,19 +1,18 @@
 package com.szz.fill;
 
-import com.szz.fill.Address;
 import com.szz.fill.datafill.metadata.DataFillMetadata;
 import com.szz.fill.datafill.handler.AbstractDataFillHandler;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author szz
  */
 public class AddressHandler extends AbstractDataFillHandler {
 
-    public static Map<Object, Address> addressMap = new HashMap();
+    public static Map<Object, Address> addressMap = new ConcurrentHashMap();
 
     static {
         addressMap.put("1",new Address("159","济南"));

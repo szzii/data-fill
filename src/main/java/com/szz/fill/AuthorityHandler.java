@@ -6,13 +6,14 @@ import com.szz.fill.datafill.metadata.DataFillMetadata;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author szz
  */
 public class AuthorityHandler extends AbstractDataFillHandler {
 
-    public static Map<Object, Authority> authMap = new HashMap();
+    public static Map<Object, Authority> authMap = new ConcurrentHashMap<>();
 
     static {
         authMap.put("1",new Authority(101));

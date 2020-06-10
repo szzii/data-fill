@@ -1,17 +1,15 @@
 package com.szz.fill;
 
 
-import com.szz.fill.datafill.annonation.DataFillEnable;
-
 
 /**
  * @author szz
  */
 public class TestMain {
 
-    public User findUser(){
+    public User findUser(String userId){
         User user = new User();
-        user.setUserId("1");
+        user.setUserId(userId);
         user.setAge(18);
         user.setName("单昭铮");
         return user;
@@ -20,10 +18,15 @@ public class TestMain {
 
     public static void main(String[] args) throws NoSuchFieldException {
         TestMain testMain = new TestMain();
-        //System.out.println(testMain.getClass() instanceof Integer);
         ProxyFactory<TestMain> proxyFactory = new ProxyFactory(testMain);
         TestMain testMainProxy = proxyFactory.newInstance(testMain);
-        User user = testMainProxy.findUser();
-        System.out.println(user.toString());
+        for (int i = 0; i < 1000; i++) {
+            new Thread(() -> {
+                User user = testMainProxy.findUser(1+"");
+                System.out.println(user.toString());
+            }).start();
+        }
+        /*User user = testMainProxy.findUser("1");
+        System.out.println(user.toString());*/
     }
 }

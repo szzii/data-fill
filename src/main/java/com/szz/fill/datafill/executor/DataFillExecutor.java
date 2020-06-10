@@ -23,8 +23,11 @@ public class DataFillExecutor {
 
     private static ConcurrentHashMap<String, DataFillHandler> handlerKeys = new ConcurrentHashMap();
 
+    private static ThreadLocal<List<Callable<Object>>> tl = ThreadLocal.withInitial(() ->{
+        List<Callable<Object>> fillGroup = new ArrayList<>();
+        return fillGroup;
+    });
 
-    private static final List<Callable<Object>> fillGroup = new ArrayList<>();
 
     public static ThreadPoolExecutor pool;
 
@@ -61,7 +64,7 @@ public class DataFillExecutor {
                 metadata.setFillObj(target);
                 metadata.setSelectionKey(findParam(dataFill, target, args));
 
-                fillGroup.add(() -> {
+                tl.get().add(() -> {
                     dispatcher(dataFill, metadata);
                     declaredField.setAccessible(true);
                     Object sinkObj = null;
@@ -114,7 +117,7 @@ public class DataFillExecutor {
 
     public static void executeAfter(){
         try {
-            List<Future<Object>> futures = pool.invokeAll(fillGroup);
+            List<Future<Object>> futures = pool.invokeAll(tl.get());
             for (Future<Object> future : futures) {
                 future.get();
             }
@@ -123,6 +126,7 @@ public class DataFillExecutor {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+        pool.shutdown();
     }
 
 

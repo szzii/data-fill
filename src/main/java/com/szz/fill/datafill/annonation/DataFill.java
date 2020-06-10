@@ -10,12 +10,10 @@ import java.lang.annotation.*;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@Inherited
 @Documented
 public @interface DataFill {
 
     String value() default "";
-
 
     Class<? extends DataFillHandler> handler();
 }

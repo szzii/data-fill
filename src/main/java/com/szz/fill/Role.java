@@ -1,6 +1,7 @@
 package com.szz.fill;
 
 import com.szz.fill.datafill.annonation.DataFill;
+import com.szz.fill.datafill.annonation.DataFillEnable;
 import lombok.Data;
 import lombok.ToString;
 
@@ -9,6 +10,7 @@ import lombok.ToString;
  */
 @ToString
 @Data
+@DataFillEnable
 public class Role {
 
     private String roleName;

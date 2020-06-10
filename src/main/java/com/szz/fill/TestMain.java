@@ -1,7 +1,8 @@
 package com.szz.fill;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
+
+import com.szz.fill.datafill.annonation.DataFillEnable;
+
 
 /**
  * @author szz
@@ -10,7 +11,7 @@ public class TestMain {
 
     public User findUser(){
         User user = new User();
-        user.setUserId("2");
+        user.setUserId("1");
         user.setAge(18);
         user.setName("单昭铮");
         return user;

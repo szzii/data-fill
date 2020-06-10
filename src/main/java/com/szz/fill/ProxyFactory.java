@@ -27,7 +27,7 @@ public class ProxyFactory<T> implements MethodInterceptor {
 
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         Object invoke = method.invoke(target, objects);
-        DataFillExecutor.executor(invoke,null);
+        DataFillExecutor.execute(invoke,null);
         return invoke;
     }
 

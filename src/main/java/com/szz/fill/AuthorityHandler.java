@@ -1,7 +1,5 @@
 package com.szz.fill;
 
-import com.szz.fill.Address;
-import com.szz.fill.Authority;
 import com.szz.fill.datafill.handler.AbstractDataFillHandler;
 import com.szz.fill.datafill.metadata.DataFillMetadata;
 

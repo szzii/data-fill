@@ -1,6 +1,7 @@
 package com.szz.fill;
 
 import com.szz.fill.datafill.annonation.DataFill;
+import com.szz.fill.datafill.annonation.DataFillEnable;
 import lombok.Data;
 import lombok.ToString;
 
@@ -10,6 +11,7 @@ import lombok.ToString;
  */
 @Data
 @ToString
+@DataFillEnable
 public class User {
 
     private String userId;

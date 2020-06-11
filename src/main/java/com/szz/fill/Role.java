@@ -18,6 +18,7 @@ public class Role {
     @DataFill(value = "userId",handler = AuthorityHandler.class)
     private Authority authority;
 
+
     public Role(String roleName) {
         this.roleName = roleName;
     }

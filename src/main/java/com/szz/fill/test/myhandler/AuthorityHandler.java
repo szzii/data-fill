@@ -1,10 +1,10 @@
-package com.szz.fill;
+package com.szz.fill.test.myhandler;
 
 import com.szz.fill.datafill.handler.AbstractDataFillHandler;
 import com.szz.fill.datafill.metadata.DataFillMetadata;
+import com.szz.fill.test.model.Authority;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,13 +24,13 @@ public class AuthorityHandler extends AbstractDataFillHandler {
 
     @Override
     public AbstractDataFillHandler fill(DataFillMetadata metadata) throws Exception {
-        System.out.println(Thread.currentThread().getName()+": 开始填充权限等级");
         Authority authority = authMap.get(metadata.getSelectionKey());
         if (null != authority){
             Field fillField = metadata.getFillField();
             fillField.setAccessible(true);
             fillField.set(metadata.getFillObj(),authority);
         }
+        System.out.println(Thread.currentThread().getName()+": 开始填充权限等级");
         return this;
     }
 }

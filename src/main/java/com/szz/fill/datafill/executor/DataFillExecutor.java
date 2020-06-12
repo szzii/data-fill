@@ -24,11 +24,11 @@ public class DataFillExecutor {
 
     private static ConcurrentHashMap<String, DataFillHandler> handlerKeys = new ConcurrentHashMap();
 
-    private static ThreadLocal<List<Runnable>> tl = InheritableThreadLocal.withInitial(() ->new ArrayList());
+    private static ThreadLocal<List<Runnable>> tl = ThreadLocal.withInitial(() ->new ArrayList());
 
-    public static final ThreadPoolExecutor pool = new ThreadPoolExecutor(3, 3, 1,
+    public static final ThreadPoolExecutor pool = new ThreadPoolExecutor(10, 10, 1,
                         TimeUnit.SECONDS,
-                        new LinkedBlockingDeque<>(),
+                        new LinkedBlockingQueue(),
                         Executors.defaultThreadFactory(),
                         new ThreadPoolExecutor.CallerRunsPolicy());
 
@@ -41,6 +41,7 @@ public class DataFillExecutor {
     public static void execute(Object target) {
         execute0(target,new ConcurrentHashMap());
     }
+
 
     public static void execute0(Object target,Map contextArgs) {
         sinkExecute(target,contextArgs,true);
@@ -70,7 +71,7 @@ public class DataFillExecutor {
                 metadata.setSelectionKey(findParam(dataFill, target, contextArgs));
 
                 if (flag){
-                    tl.get().add(() -> {
+                        tl.get().add(() -> {
                         dispatcher(dataFill, metadata);
                         declaredField.setAccessible(true);
                         try {
@@ -94,7 +95,6 @@ public class DataFillExecutor {
                         e.printStackTrace();
                     }
                 }
-
             }
         }
     }
@@ -172,7 +172,6 @@ public class DataFillExecutor {
                 e.printStackTrace();
             }
         }
-
     }
 
 

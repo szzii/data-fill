@@ -1,6 +1,7 @@
-package com.szz.fill;
+package com.szz.fill.test;
 
 
+import com.szz.fill.test.model.User;
 
 /**
  * @author szz
@@ -18,11 +19,13 @@ public class TestMain {
 
     public static void main(String[] args) {
         TestMain testMain = new TestMain();
+
         ProxyFactory<TestMain> proxyFactory = new ProxyFactory(testMain);
         TestMain testMainProxy = proxyFactory.newInstance(testMain);
-        for (int i = 0; i < 1; i++) {
+
+        for (int i = 0; i < 3; i++) {
             new Thread(() -> {
-                User user = testMainProxy.findUser(1+"");
+                User user = testMainProxy.findUser(2+"");
                 System.out.println(user.toString());
             }).start();
         }

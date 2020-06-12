@@ -1,10 +1,10 @@
-package com.szz.fill;
+package com.szz.fill.test.myhandler;
 
 import com.szz.fill.datafill.handler.AbstractDataFillHandler;
 import com.szz.fill.datafill.metadata.DataFillMetadata;
+import com.szz.fill.test.model.Role;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,13 +24,13 @@ public class RoleHandler extends AbstractDataFillHandler {
 
     @Override
     public AbstractDataFillHandler fill(DataFillMetadata metadata) throws Exception {
-        System.out.println(Thread.currentThread().getName()+": 开始填充角色");
         Role role = roleMap.get(metadata.getSelectionKey());
         if (null != role){
             Field fillField = metadata.getFillField();
             fillField.setAccessible(true);
             fillField.set(metadata.getFillObj(),role);
         }
-        return null;
+        System.out.println(Thread.currentThread().getName()+": 开始填充角色");
+        return this;
     }
 }

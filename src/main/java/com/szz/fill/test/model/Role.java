@@ -1,7 +1,8 @@
-package com.szz.fill;
+package com.szz.fill.test.model;
 
 import com.szz.fill.datafill.annonation.DataFill;
 import com.szz.fill.datafill.annonation.DataFillEnable;
+import com.szz.fill.test.myhandler.AuthorityHandler;
 import lombok.Data;
 import lombok.ToString;
 

@@ -36,7 +36,7 @@ public abstract class AbstractDataFillHandler implements DataFillHandler {
      * @return
      * @throws Exception
      */
-    public AbstractDataFillHandler fill0(DataFillMetadata metadata) throws Exception {
+    public final AbstractDataFillHandler fill0(DataFillMetadata metadata) throws Exception {
         try {
             validation(metadata);
             fill(metadata);

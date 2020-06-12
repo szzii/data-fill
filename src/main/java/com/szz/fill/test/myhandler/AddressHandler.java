@@ -1,10 +1,9 @@
-package com.szz.fill;
+package com.szz.fill.test.myhandler;
 
 import com.szz.fill.datafill.metadata.DataFillMetadata;
 import com.szz.fill.datafill.handler.AbstractDataFillHandler;
-import com.szz.fill.datafill.util.ReflectUtil;
+import com.szz.fill.test.model.Address;
 
-import javax.annotation.processing.SupportedOptions;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,22 +23,22 @@ public class AddressHandler extends AbstractDataFillHandler {
     }
 
 
+
     @Override
     public AbstractDataFillHandler fill(DataFillMetadata metadata) throws Exception {
-        System.out.println(Thread.currentThread().getName()+": 开始填充地址");
         Address address = addressMap.get(metadata.getSelectionKey());
         if (null != address){
             Field fillField = metadata.getFillField();
             fillField.setAccessible(true);
             fillField.set(metadata.getFillObj(),address);
         }
+        System.out.println(Thread.currentThread().getName()+": 开始填充地址");
         return this;
     }
 
 
-
-        @Override
+    @Override
     protected void exceptionCaught(Throwable cause) throws Exception {
-        System.out.println("地址填充异常测试");
+        super.exceptionCaught(cause);
     }
 }

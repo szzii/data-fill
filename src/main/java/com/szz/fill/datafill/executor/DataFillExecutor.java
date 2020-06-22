@@ -26,7 +26,7 @@ public class DataFillExecutor {
 
     private static ThreadLocal<List<Runnable>> tl = ThreadLocal.withInitial(() ->new ArrayList());
 
-    public static final ThreadPoolExecutor pool = new ThreadPoolExecutor(10, 10, 1,
+    public static final ThreadPoolExecutor pool = new ThreadPoolExecutor(2, 2, 1,
                         TimeUnit.SECONDS,
                         new LinkedBlockingQueue(),
                         Executors.defaultThreadFactory(),
@@ -89,7 +89,7 @@ public class DataFillExecutor {
                     try {
                         Object sinkObj = declaredField.get(target);
                         if (null != sinkObj.getClass().getAnnotation(DataFillEnable.class)) {
-                            execute0(sinkObj, contextArgs);
+                            sinkExecute(sinkObj, contextArgs,false);
                         }
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
@@ -117,7 +117,7 @@ public class DataFillExecutor {
 
 
     /**
-     * 这里类似享元模式,可以借鉴String 底层的字符串常量池原理。
+     * 这里类似享元模式,可以借鉴String的字符串常量池原理。
      * 通过注解信息查找对应字段。
      *
      * @param dataFill 填充注解

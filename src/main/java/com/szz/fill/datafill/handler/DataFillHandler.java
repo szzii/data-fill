@@ -1,7 +1,6 @@
 package com.szz.fill.datafill.handler;
 
 import com.szz.fill.datafill.metadata.DataFillMetadata;
-import com.szz.fill.datafill.util.ReflectUtil;
 
 /**
  * 填充Handler的抽象层，定义了一些基本方法,目的为以后更好的多维度扩展
@@ -21,7 +20,7 @@ public interface DataFillHandler {
      * @return
      * @throws Exception
      */
-    AbstractDataFillHandler fill(DataFillMetadata metadata) throws Exception;
+    DataFillHandler fill(DataFillMetadata metadata) throws Exception;
 
 
 
@@ -32,7 +31,7 @@ public interface DataFillHandler {
      * @return
      * @throws Exception
      */
-    default AbstractDataFillHandler fill0(DataFillMetadata metadata) throws Exception {
+    default DataFillHandler fill0(DataFillMetadata metadata) throws Exception {
         return fill(metadata);
     }
 

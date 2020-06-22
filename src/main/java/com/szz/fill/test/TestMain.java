@@ -2,6 +2,7 @@ package com.szz.fill.test;
 
 
 import com.szz.fill.test.model.User;
+import sun.misc.UCDecoder;
 
 /**
  * @author szz
@@ -23,7 +24,7 @@ public class TestMain {
         ProxyFactory<TestMain> proxyFactory = new ProxyFactory(testMain);
         TestMain testMainProxy = proxyFactory.newInstance(testMain);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 300; i++) {
             new Thread(() -> {
                 User user = testMainProxy.findUser(2+"");
                 System.out.println(user.toString());

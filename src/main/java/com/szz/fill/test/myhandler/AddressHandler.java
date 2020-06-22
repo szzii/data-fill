@@ -1,5 +1,6 @@
 package com.szz.fill.test.myhandler;
 
+import com.szz.fill.datafill.handler.DataFillHandler;
 import com.szz.fill.datafill.metadata.DataFillMetadata;
 import com.szz.fill.datafill.handler.AbstractDataFillHandler;
 import com.szz.fill.test.model.Address;
@@ -25,7 +26,7 @@ public class AddressHandler extends AbstractDataFillHandler {
 
 
     @Override
-    public AbstractDataFillHandler fill(DataFillMetadata metadata) throws Exception {
+    public DataFillHandler fill(DataFillMetadata metadata) throws Exception {
         Address address = addressMap.get(metadata.getSelectionKey());
         if (null != address){
             Field fillField = metadata.getFillField();

@@ -1,6 +1,7 @@
 package com.szz.fill.test.myhandler;
 
 import com.szz.fill.datafill.handler.AbstractDataFillHandler;
+import com.szz.fill.datafill.handler.DataFillHandler;
 import com.szz.fill.datafill.metadata.DataFillMetadata;
 import com.szz.fill.test.model.Role;
 
@@ -23,7 +24,7 @@ public class RoleHandler extends AbstractDataFillHandler {
     }
 
     @Override
-    public AbstractDataFillHandler fill(DataFillMetadata metadata) throws Exception {
+    public DataFillHandler fill(DataFillMetadata metadata) throws Exception {
         Role role = roleMap.get(metadata.getSelectionKey());
         if (null != role){
             Field fillField = metadata.getFillField();
